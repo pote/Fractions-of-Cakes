@@ -48,8 +48,8 @@ class Inicio:
 
 
     def on_drawingarea_button_press_event(self, widget, event):
-        #log.debug("-> cambiar estado a Jugar")
-        self.state.change_state(Fin)
+        log.debug("-> cambiar estado a Jugar")
+        #self.state.change_state(Fin)
 
 
     def on_drawingarea_expose_event(self, widget, event):

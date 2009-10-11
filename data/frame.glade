@@ -2,7 +2,8 @@
 <interface>
   <requires lib="gtk+" version="2.16"/>
   <!-- interface-naming-policy project-wide -->
-  <object class="GtkWindow" id="window1">
+  <object class="GtkWindow" id="window">
+    <signal name="destroy" handler="on_FRAME_destroy"/>
     <child>
       <object class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -68,57 +69,6 @@
               </object>
             </child>
             <child>
-              <object class="GtkMenuItem" id="menuitem2">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">_Edit</property>
-                <property name="use_underline">True</property>
-                <child type="submenu">
-                  <object class="GtkMenu" id="menu2">
-                    <property name="visible">True</property>
-                    <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem6">
-                        <property name="label">gtk-cut</property>
-                        <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem7">
-                        <property name="label">gtk-copy</property>
-                        <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem8">
-                        <property name="label">gtk-paste</property>
-                        <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                    <child>
-                      <object class="GtkImageMenuItem" id="imagemenuitem9">
-                        <property name="label">gtk-delete</property>
-                        <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-            <child>
-              <object class="GtkMenuItem" id="menuitem3">
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">_View</property>
-                <property name="use_underline">True</property>
-              </object>
-            </child>
-            <child>
               <object class="GtkMenuItem" id="menuitem4">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">_Help</property>
@@ -146,16 +96,24 @@
         </child>
         <child>
           <object class="GtkScrolledWindow" id="scrolledwindow1">
+            <property name="width_request">320</property>
+            <property name="height_request">240</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">automatic</property>
             <property name="vscrollbar_policy">automatic</property>
             <child>
-              <object class="GtkViewport" id="CONTAINER">
+              <object class="GtkViewport" id="content_container">
                 <property name="visible">True</property>
                 <property name="resize_mode">queue</property>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel" id="dummycontent">
+                    <property name="width_request">320</property>
+                    <property name="height_request">240</property>
+                    <property name="visible">True</property>
+                    <property name="yalign">0.4699999988079071</property>
+                    <property name="label" translatable="yes">Dummy object for remove</property>
+                  </object>
                 </child>
               </object>
             </child>
