@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkWindow" id="window">
+    <child>
+      <object class="GtkDrawingArea" id="drawingarea">
+        <property name="visible">True</property>
+        <signal name="button_press_event" handler="on_drawingarea_button_press_event"/>
+        <signal name="expose_event" handler="on_drawingarea_expose_event"/>
+      </object>
+    </child>
+  </object>
+</interface>
