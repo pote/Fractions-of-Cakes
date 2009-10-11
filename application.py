@@ -29,25 +29,25 @@ class Application:
         builder = gtk.Builder()
         builder.add_from_file("data/frame.glade")
         window = builder.get_object("window")
-        self.content = builder.get_object("dummycontent")
+        self.gtkcontent = builder.get_object("dummycontent")
         builder.connect_signals(self)
 
         self.info = dict()
-        self.change_state(Inicio)
+        self.change_state(Inicio(self))
         window.show()
 
 
-    def change_state(self, state_class):
+    def change_state(self, state):
         """
         Cambiamos el estado de la aplicación, modificamos Content.
        
         """
-        parent = self.content.parent
-        parent.remove(self.content)
-        new_state = state_class(self)
-        # del self.content
-        self.content = new_state
-        self.content.get_content().reparent(parent)
+        self.state = state
+
+        parent = self.gtkcontent.parent
+        parent.remove(self.gtkcontent)
+        self.gtkcontent = state.content
+        state.get_content().reparent(parent)
 
 
     def on_FRAME_destroy(self, userdata):

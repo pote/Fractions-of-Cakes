@@ -49,7 +49,7 @@ class Inicio:
 
     def on_drawingarea_button_press_event(self, widget, event):
         log.debug("-> cambiar estado a Jugar")
-        #self.state.change_state(Fin)
+        self.state.change_state(Fin(self.state))
 
 
     def on_drawingarea_expose_event(self, widget, event):
@@ -58,6 +58,7 @@ class Inicio:
 
 class Fin:
     def __init__(self, state):
+        self.state = state
         builder = gtk.Builder()
         builder.add_from_file("data/state_inicio.glade")
         builder.connect_signals(self)
@@ -81,6 +82,7 @@ class Fin:
 
     def on_drawingarea_button_press_event(self, widget, event):
         log.debug("-> cambiar estado a Jugar")
+        self.state.change_state(Inicio(self.state))
 
 
     def on_drawingarea_expose_event(self, widget, event):
