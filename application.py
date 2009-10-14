@@ -13,7 +13,7 @@ from estados import Inicio
 log = logging.getLogger(__name__)
 
 
-class Application:
+class Application(object):
     """
     Singleton correspondiente a la aplicación principal.
     Contiene un diccionario que mantiene la información que sera utilizada por
@@ -26,21 +26,21 @@ class Application:
         eventos, creamos y asignamos el primer estado del juego.
 
         """
-        builder = gtk.Builder()
+        builder = self.builder = gtk.Builder()
         builder.add_from_file("data/frame.glade")
-        window = builder.get_object("window")
-        self.gtkcontent = builder.get_object("dummycontent")
         builder.connect_signals(self)
 
-        self.info = dict()
+        self.state_info = dict()
         self.change_state(Inicio(self))
+
+        window = builder.get_object("window")
         window.show()
 
 
     def change_state(self, state):
         """
         Cambiamos el estado de la aplicación, modificamos Content.
-       
+
         """
         self.state = state
 
@@ -58,4 +58,4 @@ class Application:
         gtk.main()
 
 
-app = Application()        
+app = Application()

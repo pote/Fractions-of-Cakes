@@ -17,7 +17,7 @@ IMAGE = {
 }
 
 
-class JuegoModo1:
+class JuegoModo1(object):
     def __init__(self):
         log.debug("init - JuegoModo1")
         self.change_state(Inicio(self))
@@ -43,8 +43,8 @@ class JuegoModo1:
         if isinstance(self.state, Jugar):
             self.state.check(widget, event)
 
-            
-class Inicio:
+
+class Inicio(object):
     """
     Mostramos pantalla de inicio y esperamos a que el usuario pulse el raton
     para comenzar el juego.
@@ -63,9 +63,9 @@ class Inicio:
         log.debug("draw - INICIO")
         cairo_surface.set_source_surface(IMAGE["start"], 0, 0)
         cairo_surface.paint()
-    
 
-class Jugar:
+
+class Jugar(object):
     """
     Obtenemos los click's del usuario y esperamos por el resultado del juego.
 
@@ -113,7 +113,7 @@ class Jugar:
         self.torta.draw(cairo_surface)
 
 
-class Gana:
+class Gana(object):
     """
     Mostramos pantalla de felicitacion y avanzamos al siguiente nivel.
 
@@ -144,7 +144,7 @@ class Gana:
         cairo_surface.paint()
 
 
-class Pierde:
+class Pierde(object):
     """
     Mostramos pantalla de error. Volvemos al siguiente nivel.
 
@@ -177,7 +177,7 @@ class Pierde:
         cairo_surface.paint()
 
 
-class GameOver:
+class GameOver(object):
     """
     El jugador pierde por vidas.
 
@@ -204,7 +204,7 @@ class GameOver:
         cairo_surface.paint()
 
 
-class Win:
+class Win(object):
     """
     El jugador llega al final del juego.
 

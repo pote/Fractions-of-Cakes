@@ -3,7 +3,7 @@ import math
 from utils import draw_arc
 
 
-class Torta:
+class Torta(object):
     def __init__(self, fraction, pos, radius):
         """
         Creamos una torta de centro pos, radio radius y que corresponda a la
@@ -20,7 +20,7 @@ class Torta:
 
     def select(self, pos):
         """
-        Si pos esta dentro del area de la torta cambia el estado del trozo y 
+        Si pos esta dentro del area de la torta cambia el estado del trozo y
         devuelve True, en caso contrario devuelve False.
 
         """
@@ -61,4 +61,4 @@ class Torta:
                 fg = (1.0, 0.0, 0.0)
                 bg = (0.0, 1.0, 0.0)
             draw_arc(cairo_drawing_area, fg, bg, self.center[0], self.center[1],
-                self.radius, angle_start, angle_end)       
+                self.radius, angle_start, angle_end)

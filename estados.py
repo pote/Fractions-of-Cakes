@@ -2,9 +2,9 @@
 """
 Mantenemos los distintos estados de la aplicación.
 
-class State:
+class State(object):
     def __init__(self):
-        debe retornar el contenido que se pondra en CONTENT. 
+        debe retornar el contenido que se pondra en CONTENT.
 
 """
 import logging
@@ -23,14 +23,14 @@ IMAGE = {
 }
 
 
-class Inicio:
+class Inicio(object):
     def __init__(self, state):
         builder = gtk.Builder()
         builder.add_from_file("data/state_inicio.glade")
         builder.connect_signals(self)
         self.content = builder.get_object("window").child
         self.state = state
-        
+
 
     def get_content(self):
         """
@@ -56,14 +56,14 @@ class Inicio:
         self.dibujar()
 
 
-class Fin:
+class Fin(object):
     def __init__(self, state):
         self.state = state
         builder = gtk.Builder()
         builder.add_from_file("data/state_inicio.glade")
         builder.connect_signals(self)
         self.content = builder.get_object("window").child
-        
+
 
     def get_content(self):
         """
