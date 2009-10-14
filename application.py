@@ -26,14 +26,15 @@ class Application(object):
         eventos, creamos y asignamos el primer estado del juego.
 
         """
-        builder = self.builder = gtk.Builder()
+        builder = gtk.Builder()
         builder.add_from_file("data/frame.glade")
+        window = builder.get_object("window")
+        self.gtkcontent = builder.get_object("dummycontent")
         builder.connect_signals(self)
 
-        self.state_info = dict()
+        self.info = dict()
         self.change_state(Inicio(self))
 
-        window = builder.get_object("window")
         window.show()
 
 
