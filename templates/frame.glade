@@ -146,7 +146,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkScrolledWindow" id="frame_content">
+          <object class="GtkScrolledWindow" id="inner_container">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="hscrollbar_policy">automatic</property>
