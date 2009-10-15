@@ -7,6 +7,8 @@ class FraccionesActivity(Activity):
     def __init__(self, handle):
         super(FraccionesActivity, self).__init__(handle)
 
+        self.gamename = "Fracciones"
+
         # barra de herramientas de Sugar
         toolbox = ActivityToolbox(self)
         self.set_toolbox(toolbox)

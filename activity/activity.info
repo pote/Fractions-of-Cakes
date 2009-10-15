@@ -1,0 +1,9 @@
+[Activity]
+name = Fracciones
+bundle_id = progreen.Fracciones
+class = fracciones_activity.FraccionesActivity
+icon = batalla-naval-icon
+activity_version = 1
+host_version = 1
+show_launcher = no
+license = GPLv2+
