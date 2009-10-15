@@ -1,62 +1,35 @@
-# -*- encoding: utf-8
-"""
-Modulo que define la aplicación principal que carga el Frame de la ventana,
-inicializa la informacion de la aplicación y permite cambiar entre los
-estados que manejan el Content.
+# -*- coding: utf-8 -*-
+import gtk, pygtk
+from os import path
 
-"""
-import logging
-import gtk
-from estados import Inicio
+pygtk.require("2.0")
 
+def reparent(manager, template, container):
+    builder = gtk.Builder()
+    builder.add_from_file(path.join("templates", template))
+    builder.connect_signals(manager)
 
-log = logging.getLogger(__name__)
+    window = builder.get_object("window")
+    for child in window.get_children():
+        child.reparent(container)
 
+class ApplicationManager(object):
+    """ Maquina de estados principal
 
-class Application(object):
+    -Inicializa contenido de la ventana (marco) tanto para Sugar como Standalone
+    -Provee el metodo 'change_state' utilizado para cargar un nuevo bloque dentro del marco
+    -Provee atributo 'state_info' (diccionario compartido que almacena los datos de cada contenido cargado)
     """
-    Singleton correspondiente a la aplicación principal.
-    Contiene un diccionario que mantiene la información que sera utilizada por
-    los distintos estados del juego.
+    def __init__(self, frame_container):
+        super(ApplicationManager, self).__init__()
 
-    """
-    def __init__(self):
-        """
-        Cargamos el xml que define la interfaz (el marco), asignamos los
-        eventos, creamos y asignamos el primer estado del juego.
+        reparent(self, "frame.glade", frame_container)
 
-        """
-        builder = gtk.Builder()
-        builder.add_from_file("data/frame.glade")
-        window = builder.get_object("window")
-        self.gtkcontent = builder.get_object("dummycontent")
-        builder.connect_signals(self)
+        #self.state_info = dict()
+        #self.change_state(Inicio(self))
 
-        self.info = dict()
-        self.change_state(Inicio(self))
+        frame_container.connect("destroy", self.gtk_main_quit)
+        frame_container.show()
 
-        window.show()
-
-
-    def change_state(self, state):
-        """
-        Cambiamos el estado de la aplicación, modificamos Content.
-
-        """
-        self.state = state
-
-        parent = self.gtkcontent.parent
-        parent.remove(self.gtkcontent)
-        self.gtkcontent = state.content
-        state.get_content().reparent(parent)
-
-
-    def on_FRAME_destroy(self, userdata):
+    def gtk_main_quit(self, userdata=None):
         gtk.main_quit()
-
-
-    def run(self):
-        gtk.main()
-
-
-app = Application()
