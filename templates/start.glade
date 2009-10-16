@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<interface>
+  <requires lib="gtk+" version="2.16"/>
+  <!-- interface-naming-policy project-wide -->
+  <object class="GtkWindow" id="window">
+    <child>
+      <object class="GtkViewport" id="viewport">
+        <property name="visible">True</property>
+        <property name="resize_mode">queue</property>
+        <child>
+          <object class="GtkDrawingArea" id="drawingarea">
+            <property name="width_request">320</property>
+            <property name="height_request">240</property>
+            <property name="visible">True</property>
+            <property name="events">GDK_BUTTON_PRESS_MASK | GDK_STRUCTURE_MASK</property>
+            <signal name="button_press_event" handler="on_drawingarea_button_press_event"/>
+            <signal name="expose_event" handler="on_drawingarea_expose_event"/>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

@@ -31,11 +31,12 @@
                 <property name="xscale">0</property>
                 <property name="yscale">0</property>
                 <child>
-                  <object class="GtkButton" id="button1">
+                  <object class="GtkButton" id="buttonjugar">
                     <property name="label" translatable="yes">jugar</property>
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <signal name="clicked" handler="on_buttonjugar_clicked"/>
                   </object>
                 </child>
               </object>

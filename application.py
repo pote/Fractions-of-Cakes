@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import gtk, pygtk
 from util import reparent
-from estados.inicio import Inicio
+from estados import Inicio
 
 pygtk.require("2.0")
 
@@ -23,12 +23,14 @@ class ApplicationManager(object):
         window.set_title("Fracciones")
 
         self.state_info = dict()
-        self.change_state(Inicio)
+        self.change_state(Inicio(self))
 
         window.show()
 
+
     def change_state(self, state_class):
-        reparent(state_class(), state_class.template, self.inner_container)
+        reparent(state_class, state_class.template, self.inner_container)
+
 
     def gtk_main_quit(self, userdata=None):
         gtk.main_quit()
