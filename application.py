@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import gtk, pygtk
 from util import reparent
-from estados import Inicio
+from estados import BaseState, Inicio
 
 pygtk.require("2.0")
 
@@ -28,8 +28,9 @@ class ApplicationManager(object):
         window.show()
 
 
-    def change_state(self, state_class):
-        reparent(state_class, state_class.template, self.inner_container)
+    def change_state(self, new_state):
+        assert(isinstance(new_state, BaseState))
+        reparent(new_state, new_state.template, self.inner_container)
 
 
     def gtk_main_quit(self, userdata=None):
