@@ -7,7 +7,16 @@ import cairo
 log = logging.getLogger(__name__)
 
 
-class Inicio(object):
+class BaseState(object):
+    """ tareas comunes a todos los estados """
+
+    def __init__(self, appmanager):
+        super(BaseState, self).__init__()
+        self._appmanager = appmanager
+        print self.__class__
+
+
+class Inicio(BaseState):
     """
     Clase de inicio.
 
@@ -16,7 +25,7 @@ class Inicio(object):
 
 
     def __init__(self, appmanager):
-        self._appmanager = appmanager
+        super(Inicio, self).__init__(appmanager)
 
 
     def on_buttonjugar_clicked(self, widget):
@@ -24,7 +33,7 @@ class Inicio(object):
         self._appmanager.change_state(Start(self._appmanager))
 
 
-class Start(object):
+class Start(BaseState):
     """
     Clase para probar las transiciones.
 
@@ -33,7 +42,7 @@ class Start(object):
 
 
     def __init__(self, appmanager):
-        self._appmanager = appmanager
+        super(Start, self).__init__(appmanager)
         self.image = cairo.ImageSurface.create_from_png("data/start.png")
 
 
@@ -49,7 +58,7 @@ class Start(object):
         cr.paint()
 
 
-class Juego(object):
+class Juego(BaseState):
     """
     Clase que dibuja la torta.
 
@@ -58,7 +67,7 @@ class Juego(object):
 
 
     def __init__(self, appmanager):
-        self._appmanager = appmanager
+        super(Juego, self).__init__(appmanager)
         # Aqui tenemos que cargar en la segunda posicion del contenedor vbox
         # una clase torta en este caso.
         # Si fuera otro tipo de juego estariamos cargando un grid que
@@ -81,7 +90,7 @@ class Juego(object):
         self._appmanager.change_state(Fin(self._appmanager))
 
 
-class Fin(object):
+class Fin(BaseState):
     """
     Clase para probar las transiciones.
 
@@ -90,7 +99,7 @@ class Fin(object):
 
 
     def __init__(self, appmanager):
-        self._appmanager = appmanager
+        super(Fin, self).__init__(appmanager)
         self.image = cairo.ImageSurface.create_from_png("data/win.png")
 
 
