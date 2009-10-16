@@ -12,8 +12,16 @@ class BaseState(object):
 
     def __init__(self, appmanager):
         super(BaseState, self).__init__()
+
         self._appmanager = appmanager
-        print self.__class__
+        # cuando BaseState se instancia desde una clase heredada self.__class__ es esa clase y no BaseState
+        # esto nos permite usar la clase misma como llave en el diccionario
+        self.state_info = appmanager.state_info[self.__class__] if self.__class__ in appmanager.state_info else {}
+
+
+    def change_state(self, new_state):
+        self._appmanager.state_info[self.__class__] = self.state_info
+        self._appmanager.change_state(new_state)
 
 
 class Inicio(BaseState):
@@ -30,7 +38,7 @@ class Inicio(BaseState):
 
     def on_buttonjugar_clicked(self, widget):
         log.debug("-> cambiar estado a Start")
-        self._appmanager.change_state(Start(self._appmanager))
+        self.change_state(Start(self._appmanager))
 
 
 class Start(BaseState):
@@ -48,8 +56,8 @@ class Start(BaseState):
 
     def on_drawingarea_button_press_event(self, widget, event):
         #log.debug("-> cambiar estado a Fin")
-        #self._appmanager.change_state(Fin(self._appmanager))
-        self._appmanager.change_state(Juego(self._appmanager))
+        #self.change_state(Fin(self._appmanager))
+        self.change_state(Juego(self._appmanager))
 
 
     def on_drawingarea_expose_event(self, widget, event):
@@ -76,7 +84,7 @@ class Juego(BaseState):
 
     def on_drawingarea_button_press_event(self, widget, event):
         log.debug("-> cambiar estado a Fin")
-        self._appmanager.change_state(Fin(self._appmanager))
+        self.change_state(Fin(self._appmanager))
 
 
     def on_drawingarea_expose_event(self, widget, event):
@@ -87,7 +95,7 @@ class Juego(BaseState):
 
     def on_button_clicked(self, widget):
         log.debug("-> cambiar estado a Start")
-        self._appmanager.change_state(Fin(self._appmanager))
+        self.change_state(Fin(self._appmanager))
 
 
 class Fin(BaseState):
@@ -105,7 +113,7 @@ class Fin(BaseState):
 
     def on_drawingarea_button_press_event(self, widget, event):
         log.debug("-> cambiar estado a Start")
-        self._appmanager.change_state(Start(self._appmanager))
+        self.change_state(Start(self._appmanager))
 
 
     def on_drawingarea_expose_event(self, widget, event):
