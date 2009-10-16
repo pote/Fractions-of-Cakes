@@ -19,7 +19,7 @@ class Inicio(object):
         self._state = state
 
 
-    def on_buttonjugar_clicked(self, widget): #, event):
+    def on_buttonjugar_clicked(self, widget):
         log.debug("-> cambiar estado a Start")
         self._state.change_state(Start(self._state))
 
@@ -38,6 +38,34 @@ class Start(object):
 
 
     def on_drawingarea_button_press_event(self, widget, event):
+        #log.debug("-> cambiar estado a Fin")
+        #self._state.change_state(Fin(self._state))
+        self._state.change_state(Juego(self._state))
+
+
+    def on_drawingarea_expose_event(self, widget, event):
+        cr = widget.window.cairo_create()
+        cr.set_source_surface(self.image, 0, 0)
+        cr.paint()
+
+
+class Juego(object):
+    """
+    Clase que dibuja la torta.
+
+    """
+    template = "juego.glade"
+
+
+    def __init__(self, state):
+        self._state = state
+        # Aqui tenemos que cargar en la segunda posicion del contenedor vbox
+        # una clase torta en este caso.
+        # Si fuera otro tipo de juego estariamos cargando un grid que
+        # contendria X clases torta.
+
+
+    def on_drawingarea_button_press_event(self, widget, event):
         log.debug("-> cambiar estado a Fin")
         self._state.change_state(Fin(self._state))
 
@@ -46,6 +74,11 @@ class Start(object):
         cr = widget.window.cairo_create()
         cr.set_source_surface(self.image, 0, 0)
         cr.paint()
+
+
+    def on_button_clicked(self, widget):
+        log.debug("-> cambiar estado a Start")
+        self._state.change_state(Fin(self._state))
 
 
 class Fin(object):
