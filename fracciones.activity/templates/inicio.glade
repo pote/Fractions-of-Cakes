@@ -15,10 +15,6 @@
               <object class="GtkLabel" id="label1">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Fracciones</property>
-                <attributes>
-                  <attribute name="underline" value="True"/>
-                  <attribute name="scale" value="2.500000"/>
-                </attributes>
               </object>
               <packing>
                 <property name="position">0</property>
