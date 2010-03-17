@@ -4,8 +4,8 @@ from application import ApplicationManager
 
 class FraccionesActivity(Activity):
     """ Clase principal cuando la aplicacion corre como actividad dentro de Sugar """
-    def __init__(self, handle):
-        super(FraccionesActivity, self).__init__(handle)
+    def __init__(self, handle, *args, **kwargs):
+        super(FraccionesActivity, self).__init__(handle, *args, **kwargs)
 
         self.gamename = "Fracciones"
 
