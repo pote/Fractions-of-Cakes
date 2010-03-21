@@ -32,7 +32,7 @@ class Cake(gtk.DrawingArea):
         self.add_events(gtk.gdk.BUTTON_PRESS_MASK)
         # variables de estado de la torta
         self.subdivisions = subdivisions
-        self.selected = subdivisions * [0]
+        self.selected_list = subdivisions * [False]
 
         # Carga imagenes
         self.image_bg = cairo.ImageSurface.create_from_png(os.path.join("data", "bg.png"))
@@ -73,17 +73,16 @@ class Cake(gtk.DrawingArea):
                 context.stroke()
 
 
-        def mask_image(context, selected, image):
+        def mask_image(context, image):
             """Enmascara la imagen de la torta y dibuja solo los trozos que no
             fueron seleccionados
             """
-            subdivisions = len(selected)
             image_ctx = cairo.Context(image)
             image_ctx.set_operator(cairo.OPERATOR_CLEAR)
-            for sector in xrange(subdivisions):
-                if selected[sector]:
-                    angle_start = 2 * math.pi * sector / subdivisions
-                    angle_end = 2 * math.pi * (sector + 1) / subdivisions
+            for index, selected in enumerate(self.selected_list):
+                if selected:
+                    angle_start = 2 * math.pi * index / self.subdivisions
+                    angle_end = 2 * math.pi * (index + 1) / self.subdivisions
                     image_ctx.move_to(WIDTH/2, HEIGHT/2)
                     image_ctx.line_to(
                         WIDTH/2 + RADIUS*math.cos(angle_start),
@@ -111,7 +110,7 @@ class Cake(gtk.DrawingArea):
         context.paint()
 
         # Dibuja el frente 
-        mask_image(context, self.selected, self.image_fg)
+        mask_image(context, self.image_fg)
 
         # Dibuja la rejilla
         draw_grid(context, self.subdivisions)
@@ -135,7 +134,7 @@ class Cake(gtk.DrawingArea):
             angle += 2 * math.pi
         sector = angle * self.subdivisions / (2 * math.pi)
         index = int(math.floor(sector))
-        self.selected[index] = 1 - self.selected[index]
+        self.selected_list[index] = not self.selected_list[index]
         return True
 
 
