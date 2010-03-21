@@ -31,13 +31,24 @@ class Cake(gtk.DrawingArea):
         self.selected = N * [0]
 
 
+    def get_current_fraction(self):
+        """Return the current fraction"""
+        return (sum(self.selected), self.N)
+
+
+    def reset(self, N):
+        self.N = N
+        self.selected = N * [0]
+        self.show()
+
+
     def expose(self, widget, event):
         """Manejador del evento expose_event"""
         context = widget.window.cairo_create()
         # Elegimos solo la region expuesta al evento
         context.rectangle(event.area.x, event.area.y, event.area.width, event.area.height)
         context.clip()
-        self.draw(context)
+        self.draw(self.window.cairo_create())
 
 
     def button_press(self, widget, event):
