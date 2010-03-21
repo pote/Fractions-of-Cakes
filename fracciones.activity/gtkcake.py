@@ -77,10 +77,14 @@ class Cake(gtk.DrawingArea):
             """Enmascara la imagen de la torta y dibuja solo los trozos que no
             fueron seleccionados
             """
+            # al crear un cairo.Context los cambios se graban en el Surface que se le pase al constructor
+            # por lo tanto necesitamos usar dummy_image para no alterar image que es propio a la clase
             dummy_image = cairo.ImageSurface(cairo.FORMAT_ARGB32, WIDTH, HEIGHT)
             image_ctx = cairo.Context(dummy_image)
+            # ponemos la imagen como source_surface de modo que cairo no nos escriba arriba
             image_ctx.set_source_surface(image)
             image_ctx.paint()
+            # el metodo de enmascaramiento es dibujar en modo "borrar" ya que mask no quiso andar
             image_ctx.set_operator(cairo.OPERATOR_CLEAR)
             for index, selected in enumerate(self.selected_list):
                 if selected:
@@ -95,6 +99,7 @@ class Cake(gtk.DrawingArea):
                         angle_end)
                     image_ctx.close_path()
                     image_ctx.fill()
+            # cargamos la imagen con las partes borradas sobre el context general
             context.set_source_surface(dummy_image)
             context.paint()
 
