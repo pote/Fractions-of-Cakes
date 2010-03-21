@@ -20,7 +20,7 @@ class FractionLogic(object):
         if DENOMINATOR_MIN < 1:
             raise Exception("DENOMINATOR_MIN need be greather than 0")
         self.denominator = random.randrange(DENOMINATOR_MIN, DENOMINATOR_MAX)
-        self.numerator = random.randrange(0, self.denominator)
+        self.numerator = random.randrange(0, self.denominator+1)
 
 
     def get_current(self):
