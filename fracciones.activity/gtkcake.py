@@ -55,6 +55,7 @@ class Cake(gtk.DrawingArea):
             self._draw(context)
 
 
+
     def expose(self, widget, event):
         """Manejador del evento expose_event"""
         context = widget.window.cairo_create()
@@ -66,6 +67,7 @@ class Cake(gtk.DrawingArea):
 
     def select(self, widget, event):
         """Manejador del evento button_press_event"""
+        print event.get_coords()
         x, y = event.get_coords()
         if self._select(x, y):
             context = widget.window.cairo_create()
@@ -77,8 +79,8 @@ class Cake(gtk.DrawingArea):
         seleccionado, False en caso contrario."""
         # Transformamos las coordenadas del usuario a coordenadas reales (0-1)
         rect = self.get_allocation()
-        wx = float(ux - rect.x) / float(rect.width)
-        wy = float(uy - rect.y) / float(rect.height)
+        wx = float(ux) / float(rect.width)
+        wy = float(uy) / float(rect.height)
         # Centramos
         wx -= 0.5
         wy -= 0.5
@@ -159,6 +161,7 @@ class Cake(gtk.DrawingArea):
 
         # Dibuja la rejilla
         draw_grid()
+
 
 
 if __name__ == "__main__":
