@@ -27,11 +27,11 @@ class Cake(gtk.DrawingArea):
         gtk.DrawingArea.__init__(self, *args, **kwargs)
         # señales
         self.connect("expose_event", self.expose)
-        self.connect("button_press_event", self.button_press)
+        self.connect("button_press_event", self.select)
         # Los eventos del raton no estan activados para el DrawingArea
         self.add_events(gtk.gdk.BUTTON_PRESS_MASK)
+
         # variables de estado de la torta
-        self.subdivisions = subdivisions
         self.selected_list = subdivisions * [False]
 
         # Carga imagenes
@@ -48,11 +48,32 @@ class Cake(gtk.DrawingArea):
         self._draw(context)
 
 
-    def button_press(self, widget, event):
+    def select(self, widget, event):
         """Manejador del evento button_press_event"""
         x, y = event.get_coords()
         if self._select(x, y):
             self._draw(widget.window.cairo_create())
+
+
+    def _select(self, ux, uy):
+        """Selecciona un trozo de la torta. Devuelve True si un objeto fue
+        seleccionado, False en caso contrario."""
+        # Transformamos las coordenadas del usuario a coordenadas reales (0-1)
+        rect = self.get_allocation()
+        wx = float(ux - rect.x) / float(rect.width)
+        wy = float(uy - rect.y) / float(rect.height)
+        # Centramos
+        wx -= 0.5
+        wy -= 0.5
+        if math.pow(wx, 2) + math.pow(wy, 2) > math.pow(WRADIUS, 2):
+            return False
+        angle = math.atan2(wy, wx)
+        if angle < 0:
+            angle += 2 * math.pi
+        sector = angle * len(self.selected_list) / (2 * math.pi)
+        index = int(math.floor(sector))
+        self.selected_list[index] = not self.selected_list[index]
+        return True
         
 
     def _draw(self, context):
@@ -63,8 +84,9 @@ class Cake(gtk.DrawingArea):
             context.set_source_rgb(0, 0, 0)
             context.arc(WIDTH/2, HEIGHT/2, RADIUS, 0, 2 * math.pi)
             context.stroke()
-            for i in range(self.subdivisions):
-                angle = 2 * math.pi * i / self.subdivisions
+            subdivisions = len(self.selected_list)
+            for i in range(subdivisions):
+                angle = 2 * math.pi * i / subdivisions
                 context.move_to(WIDTH/2, HEIGHT/2)
                 context.line_to(
                     WIDTH/2 + RADIUS*math.cos(angle),
@@ -86,10 +108,11 @@ class Cake(gtk.DrawingArea):
             image_ctx.paint()
             # el metodo de enmascaramiento es dibujar en modo "borrar" ya que mask no quiso andar
             image_ctx.set_operator(cairo.OPERATOR_CLEAR)
+            subdivisions = len(self.selected_list)
             for index, selected in enumerate(self.selected_list):
                 if selected:
-                    angle_start = 2 * math.pi * index / self.subdivisions
-                    angle_end = 2 * math.pi * (index + 1) / self.subdivisions
+                    angle_start = 2 * math.pi * index / subdivisions
+                    angle_end = 2 * math.pi * (index + 1) / subdivisions
                     image_ctx.move_to(WIDTH/2, HEIGHT/2)
                     image_ctx.line_to(
                         WIDTH/2 + RADIUS*math.cos(angle_start),
@@ -121,27 +144,6 @@ class Cake(gtk.DrawingArea):
 
         # Dibuja la rejilla
         draw_grid()
-
-
-    def _select(self, ux, uy):
-        """Selecciona un trozo de la torta. Devuelve True si un objeto fue
-        seleccionado, False en caso contrario."""
-        # Transformamos las coordenadas del usuario a coordenadas reales (0-1)
-        rect = self.get_allocation()
-        wx = float(ux - rect.x) / float(rect.width)
-        wy = float(uy - rect.y) / float(rect.height)
-        # Centramos
-        wx -= 0.5
-        wy -= 0.5
-        if math.pow(wx, 2) + math.pow(wy, 2) > math.pow(WRADIUS, 2):
-            return False
-        angle = math.atan2(wy, wx)
-        if angle < 0:
-            angle += 2 * math.pi
-        sector = angle * self.subdivisions / (2 * math.pi)
-        index = int(math.floor(sector))
-        self.selected_list[index] = not self.selected_list[index]
-        return True
 
 
 if __name__ == "__main__":
