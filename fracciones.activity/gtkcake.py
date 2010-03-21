@@ -7,7 +7,7 @@ Tiene un borde de 30 pixeles.
 Pasado a coordenadas mundiales el radio es: (500-2*30)/(2*500) = 0.44
 
 """
-import os
+import os, sys
 import math
 import gtk
 import cairo
@@ -141,7 +141,10 @@ class Cake(gtk.DrawingArea):
 if __name__ == "__main__":
     # Probamos el nuevo widget Cake
     window = gtk.Window()
-    cake = Cake(6)
+    try:
+        cake = Cake(int(sys.argv[1]))
+    except IndexError:
+        cake = Cake(6)
     window.add(cake)
     window.connect("destroy", gtk.main_quit)
     window.show_all()
