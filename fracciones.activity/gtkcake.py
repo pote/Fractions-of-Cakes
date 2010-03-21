@@ -53,6 +53,7 @@ class Cake(gtk.DrawingArea):
 
     def button_press(self, widget, event):
         """Manejador del evento button_press_event"""
+        print event.get_coords()
         x, y = event.get_coords()
         if self.select(x, y):
             self.draw(widget.window.cairo_create())
@@ -129,8 +130,9 @@ class Cake(gtk.DrawingArea):
         seleccionado, False en caso contrario."""
         # Transformamos las coordenadas del usuario a coordenadas reales (0-1)
         rect = self.get_allocation()
-        wx = float(ux - rect.x) / float(rect.width)
-        wy = float(uy - rect.y) / float(rect.height)
+        wx = float(ux) / float(rect.width)
+        wy = float(uy) / float(rect.height)
+        print rect, wx, wy
         # Centramos
         wx -= 0.5
         wy -= 0.5
