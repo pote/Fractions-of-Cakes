@@ -31,6 +31,10 @@ class Cake(gtk.DrawingArea):
         self.subdivisions = subdivisions
         self.selected = subdivisions * [0]
 
+        # Carga imagenes
+        self.image_bg = cairo.ImageSurface.create_from_png(os.path.join("data", "bg.png"))
+        self.image_fg = cairo.ImageSurface.create_from_png(os.path.join("data", "fg.png"))
+
 
     def expose(self, widget, event):
         """Manejador del evento expose_event"""
@@ -90,10 +94,6 @@ class Cake(gtk.DrawingArea):
             context.paint()
 
 
-        # Carga imagenes
-        image_bg = cairo.ImageSurface.create_from_png(os.path.join("data", "bg.png"))
-        image_fg = cairo.ImageSurface.create_from_png(os.path.join("data", "fg.png"))
-
         # Escala la imagen al tamaño de la superficie
         rect = self.get_allocation()
         context.save()
@@ -103,11 +103,11 @@ class Cake(gtk.DrawingArea):
             )
 
         # Dibuja el fondo
-        context.set_source_surface(image_bg, 0, 0)
+        context.set_source_surface(self.image_bg, 0, 0)
         context.paint()
 
         # Dibuja el frente 
-        mask_image(context, self.selected, image_fg)
+        mask_image(context, self.selected, self.image_fg)
 
         # Dibuja la rejilla
         draw_grid(context, self.subdivisions)
