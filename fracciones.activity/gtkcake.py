@@ -150,7 +150,7 @@ class Cake(gtk.DrawingArea):
         # Escala la imagen al tamaño de la superficie
         # WIDTH/HEIGHT corresponden al tamaño de los graficos
         rect = self.get_allocation()
-        tmp_context.scale(
+        showed_context.scale(
             float(rect.width) / WIDTH,
             float(rect.height) / HEIGHT
             )
