@@ -29,7 +29,7 @@ class Cake(gtk.DrawingArea):
         self.image_bg = cairo.ImageSurface.create_from_png(os.path.join("data", "bg.png"))
         self.image_fg = cairo.ImageSurface.create_from_png(os.path.join("data", "fg.png"))
         # inicializa estado interno (se dibuja en el metodo expose)
-        self.reset(subdivisions, draw=false)
+        self.reset(subdivisions, draw=False)
         # señales
         self.connect("expose_event", self.expose)
         self.connect("button_press_event", self.select)
@@ -44,7 +44,7 @@ class Cake(gtk.DrawingArea):
 
     @property
     def current_fraction(self):
-        return (len(selected for selected in self.selected_list if selected), self.subdivisions)
+        return (len([selected for selected in self.selected_list if selected]), self.subdivisions)
 
 
     def reset(self, subdivisions, draw=True):
@@ -67,7 +67,6 @@ class Cake(gtk.DrawingArea):
 
     def select(self, widget, event):
         """Manejador del evento button_press_event"""
-        print event.get_coords()
         x, y = event.get_coords()
         if self._select(x, y):
             context = widget.window.cairo_create()
