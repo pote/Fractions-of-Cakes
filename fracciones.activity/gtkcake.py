@@ -55,7 +55,6 @@ class Cake(gtk.DrawingArea):
             self._draw(context)
 
 
-
     def expose(self, widget, event):
         """Manejador del evento expose_event"""
         context = widget.window.cairo_create()
@@ -94,10 +93,10 @@ class Cake(gtk.DrawingArea):
         return True
         
 
-    def _draw(self, context):
+    def _draw(self, showed_context):
         """Dibuja el contenido del widget"""
 
-        def draw_grid():
+        def draw_grid(context):
             """Dibuja la rejilla de la torta y sus subdivisiones"""
             context.set_source_rgb(0, 0, 0)
             context.arc(WIDTH/2, HEIGHT/2, RADIUS, 0, 2 * math.pi)
@@ -112,7 +111,7 @@ class Cake(gtk.DrawingArea):
                 context.stroke()
 
 
-        def mask_image(image):
+        def mask_image(context, image):
             """Enmascara la imagen de la torta y dibuja solo los trozos que no
             fueron seleccionados
             """
@@ -143,23 +142,32 @@ class Cake(gtk.DrawingArea):
             context.paint()
 
 
+        # para prevenir "flickering" usamos un contexto temporal para dibujar
+        # de lo contrario cada operacion de dibujo se visualiza en el acto
+        tmp_image = cairo.ImageSurface(cairo.FORMAT_ARGB32, WIDTH, HEIGHT)
+        tmp_context = cairo.Context(tmp_image)
+
         # Escala la imagen al tamaño de la superficie
         # WIDTH/HEIGHT corresponden al tamaño de los graficos
         rect = self.get_allocation()
-        context.scale(
+        tmp_context.scale(
             float(rect.width) / WIDTH,
             float(rect.height) / HEIGHT
             )
 
         # Dibuja el fondo
-        context.set_source_surface(self.image_bg)
-        context.paint()
+        tmp_context.set_source_surface(self.image_bg)
+        tmp_context.paint()
 
         # Dibuja el frente 
-        mask_image(self.image_fg)
+        mask_image(tmp_context, self.image_fg)
 
         # Dibuja la rejilla
-        draw_grid()
+        draw_grid(tmp_context)
+
+        # pasamos el resultado de todos los dibujos al contexto visible en un solo paso
+        showed_context.set_source_surface(tmp_image)
+        showed_context.paint()
 
 
 
