@@ -38,17 +38,17 @@ class Cake(gtk.DrawingArea):
         # Elegimos solo la region expuesta al evento
         context.rectangle(event.area.x, event.area.y, event.area.width, event.area.height)
         context.clip()
-        self.draw(context)
+        self._draw(context)
 
 
     def button_press(self, widget, event):
         """Manejador del evento button_press_event"""
         x, y = event.get_coords()
-        if self.select(x, y):
-            self.draw(widget.window.cairo_create())
+        if self._select(x, y):
+            self._draw(widget.window.cairo_create())
         
 
-    def draw(self, context):
+    def _draw(self, context):
         """Dibuja el contenido del widget"""
 
         def draw_grid(context, subdivisions):
@@ -114,7 +114,7 @@ class Cake(gtk.DrawingArea):
         context.restore()
 
 
-    def select(self, ux, uy):
+    def _select(self, ux, uy):
         """Selecciona un trozo de la torta. Devuelve True si un objeto fue
         seleccionado, False en caso contrario."""
         # Transformamos las coordenadas del usuario a coordenadas reales (0-1)
