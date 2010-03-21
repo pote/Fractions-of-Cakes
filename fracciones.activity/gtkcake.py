@@ -23,11 +23,14 @@ class Cake(gtk.DrawingArea):
     """Widget que dibuja una torta y permite seleccionar trozos de ella"""
 
     def __init__(self, subdivisions, *args, **kwargs):
+        # constructor de la clase base
         gtk.DrawingArea.__init__(self, *args, **kwargs)
+        # señales
         self.connect("expose_event", self.expose)
         self.connect("button_press_event", self.button_press)
         # Los eventos del raton no estan activados para el DrawingArea
         self.add_events(gtk.gdk.BUTTON_PRESS_MASK)
+        # variables de estado de la torta
         self.subdivisions = subdivisions
         self.selected = subdivisions * [0]
 
@@ -95,6 +98,7 @@ class Cake(gtk.DrawingArea):
 
 
         # Escala la imagen al tamaño de la superficie
+        # WIDTH/HEIGHT corresponden al tamaño de los graficos
         rect = self.get_allocation()
         context.save()
         context.scale(
