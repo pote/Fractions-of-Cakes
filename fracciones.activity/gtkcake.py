@@ -37,6 +37,16 @@ class Cake(gtk.DrawingArea):
         self.add_events(gtk.gdk.BUTTON_PRESS_MASK)
 
 
+    @property
+    def subdivisions(self):
+        return len(self.selected_list)
+
+
+    @property
+    def current_fraction(self):
+        return (len(selected for selected in self.selected_list if selected), self.subdivisions)
+
+
     def reset(self, subdivisions, draw=True):
         # variables de estado de la torta
         self.selected_list = subdivisions * [False]
@@ -77,7 +87,7 @@ class Cake(gtk.DrawingArea):
         angle = math.atan2(wy, wx)
         if angle < 0:
             angle += 2 * math.pi
-        sector = angle * len(self.selected_list) / (2 * math.pi)
+        sector = angle * self.subdivisions / (2 * math.pi)
         index = int(math.floor(sector))
         self.selected_list[index] = not self.selected_list[index]
         return True
@@ -91,9 +101,8 @@ class Cake(gtk.DrawingArea):
             context.set_source_rgb(0, 0, 0)
             context.arc(WIDTH/2, HEIGHT/2, RADIUS, 0, 2 * math.pi)
             context.stroke()
-            subdivisions = len(self.selected_list)
-            for i in range(subdivisions):
-                angle = 2 * math.pi * i / subdivisions
+            for i in range(self.subdivisions):
+                angle = 2 * math.pi * i / self.subdivisions
                 context.move_to(WIDTH/2, HEIGHT/2)
                 context.line_to(
                     WIDTH/2 + RADIUS*math.cos(angle),
@@ -115,11 +124,10 @@ class Cake(gtk.DrawingArea):
             image_ctx.paint()
             # el metodo de enmascaramiento es dibujar en modo "borrar" ya que mask no quiso andar
             image_ctx.set_operator(cairo.OPERATOR_CLEAR)
-            subdivisions = len(self.selected_list)
             for index, selected in enumerate(self.selected_list):
                 if selected:
-                    angle_start = 2 * math.pi * index / subdivisions
-                    angle_end = 2 * math.pi * (index + 1) / subdivisions
+                    angle_start = 2 * math.pi * index / self.subdivisions
+                    angle_end = 2 * math.pi * (index + 1) / self.subdivisions
                     image_ctx.move_to(WIDTH/2, HEIGHT/2)
                     image_ctx.line_to(
                         WIDTH/2 + RADIUS*math.cos(angle_start),
