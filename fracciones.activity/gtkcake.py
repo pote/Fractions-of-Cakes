@@ -7,6 +7,7 @@ Tiene un borde de 30 pixeles.
 Pasado a coordenadas mundiales el radio es: (500-2*30)/(2*500) = 0.44
 
 """
+import os
 import math
 import gtk
 import cairo
@@ -90,8 +91,8 @@ class Cake(gtk.DrawingArea):
 
 
         # Carga imagenes
-        image_bg = cairo.ImageSurface.create_from_png("bg.png")
-        image_fg = cairo.ImageSurface.create_from_png("fg.png")
+        image_bg = cairo.ImageSurface.create_from_png(os.path.join("data", "bg.png"))
+        image_fg = cairo.ImageSurface.create_from_png(os.path.join("data", "fg.png"))
 
         # Escala la imagen al tamaño de la superficie
         rect = self.get_allocation()
