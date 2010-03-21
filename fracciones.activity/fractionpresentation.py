@@ -11,6 +11,7 @@ import gtkcake
 from fractionlogic import FractionLogic
 
 
+logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger()
 
 
@@ -36,7 +37,7 @@ class FractionPresentation(gtk.VBox):
         gamem.set_submenu(gamemenu)
 
         new = gtk.MenuItem("New")
-        new.connect("activate", self.menu_game_new)
+        new.connect("activate", self.new_game)
         gamemenu.append(new)
 
         exit = gtk.MenuItem("Exit")
@@ -66,45 +67,45 @@ class FractionPresentation(gtk.VBox):
         self.cake = cake
         # 4. button
         button = gtk.Button("Check")
-        button.connect("clicked", self.on_clicked_check)
+        button.connect("clicked", self.check_cake)
         self.pack_start(button, False, True)
-        # Connect signals
+
         # show all widgets
         self.show_all()
 
 
-        # try reparent cake
-        self.menu_game_new()
-
-
-    def menu_game_new(self):
-        print "menu_game_new"
+    def new_game(self):
+        log.debug("menu_game_new")
         self.logic.generate()
         self.label.set_text("""Select %i/%i"""%self.logic.get_current())
         self.cake.reset(self.logic.get_current()[1])
 
 
     def menu_game_exit(self):
-        print "menu_game_exit"
+        log.debug("menu_game_exit")
         gtk.main_quit()
 
     
     def menu_help_about(self):
-        print "menu_help_about"
+        log.debug("menu_help_about")
         about = gtk.AboutDialog()
         about.set_program_name("Fracciones")
         about.run()
         about.destroy()
 
 
-    def on_clicked_check(self, widget):
+    def check_cake(self, widget):
         """Clicked button check"""
-        print "on_clicked_check"
+        log.debug("on_clicked_check")
         if self.logic.is_equal(self.cake.get_current_fraction()):
-            print "ok"
-            self.menu_game_new()
+            md = gtk.MessageDialog(None, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, "GOOD!")
+            md.run()
+            md.destroy()
+            self.new_game()
         else:
-            print "wrong"
+            md = gtk.MessageDialog(None, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, "BAD!")
+            md.run()
+            md.destroy()
 
 
 if __name__ == "__main__":
@@ -114,5 +115,6 @@ if __name__ == "__main__":
             self.add(FractionPresentation())
             self.connect("destroy", gtk.main_quit)
             self.show()
+    log.debug("Hola")
     Main()
     gtk.main()
