@@ -14,4 +14,5 @@ class FraccionesActivity(Activity):
         self.set_toolbox(toolbox)
         toolbox.show()
 
-        self.add(FractionPresentation())
+        self.set_canvas(FractionPresentation())
+        self.show_all()
