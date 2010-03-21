@@ -25,18 +25,24 @@ class Cake(gtk.DrawingArea):
     def __init__(self, subdivisions, *args, **kwargs):
         # constructor de la clase base
         gtk.DrawingArea.__init__(self, *args, **kwargs)
+        # Carga imagenes
+        self.image_bg = cairo.ImageSurface.create_from_png(os.path.join("data", "bg.png"))
+        self.image_fg = cairo.ImageSurface.create_from_png(os.path.join("data", "fg.png"))
+        # inicializa estado interno (se dibuja en el metodo expose)
+        self.reset(subdivisions, draw=false)
         # señales
         self.connect("expose_event", self.expose)
         self.connect("button_press_event", self.select)
         # Los eventos del raton no estan activados para el DrawingArea
         self.add_events(gtk.gdk.BUTTON_PRESS_MASK)
 
+
+    def reset(self, subdivisions, draw=True):
         # variables de estado de la torta
         self.selected_list = subdivisions * [False]
-
-        # Carga imagenes
-        self.image_bg = cairo.ImageSurface.create_from_png(os.path.join("data", "bg.png"))
-        self.image_fg = cairo.ImageSurface.create_from_png(os.path.join("data", "fg.png"))
+        if draw:
+            context = self.window.cairo_create()
+            self._draw(context)
 
 
     def expose(self, widget, event):
@@ -52,7 +58,8 @@ class Cake(gtk.DrawingArea):
         """Manejador del evento button_press_event"""
         x, y = event.get_coords()
         if self._select(x, y):
-            self._draw(widget.window.cairo_create())
+            context = widget.window.cairo_create()
+            self._draw(context)
 
 
     def _select(self, ux, uy):
