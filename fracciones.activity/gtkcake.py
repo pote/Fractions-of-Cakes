@@ -99,14 +99,13 @@ class Cake(gtk.DrawingArea):
         # Escala la imagen al tamaño de la superficie
         # WIDTH/HEIGHT corresponden al tamaño de los graficos
         rect = self.get_allocation()
-        context.save()
         context.scale(
             float(rect.width) / WIDTH,
             float(rect.height) / HEIGHT
             )
 
         # Dibuja el fondo
-        context.set_source_surface(self.image_bg, 0, 0)
+        context.set_source_surface(self.image_bg)
         context.paint()
 
         # Dibuja el frente 
@@ -114,7 +113,6 @@ class Cake(gtk.DrawingArea):
 
         # Dibuja la rejilla
         draw_grid(context, self.subdivisions)
-        context.restore()
 
 
     def _select(self, ux, uy):
