@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from sugar.activity.activity import Activity, ActivityToolbox
-from application import ApplicationManager
+from fractionpresentation import FractionPresentation
 
 class FraccionesActivity(Activity):
     """ Clase principal cuando la aplicacion corre como actividad dentro de Sugar """
@@ -14,5 +14,4 @@ class FraccionesActivity(Activity):
         self.set_toolbox(toolbox)
         toolbox.show()
 
-        # conectar maquina de estados principal
-        self.application_manager = ApplicationManager(self)
+        self.add(FractionPresentation())
