@@ -22,8 +22,8 @@ WRADIUS = 0.44
 class Cake(gtk.DrawingArea):
     """Widget que dibuja una torta y permite seleccionar trozos de ella"""
 
-    def __init__(self, subdivisions):
-        gtk.DrawingArea.__init__(self)
+    def __init__(self, subdivisions, *args, **kwargs):
+        gtk.DrawingArea.__init__(self, *args, **kwargs)
         self.connect("expose_event", self.expose)
         self.connect("button_press_event", self.button_press)
         # Los eventos del raton no estan activados para el DrawingArea
