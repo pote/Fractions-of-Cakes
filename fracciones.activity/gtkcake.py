@@ -77,7 +77,10 @@ class Cake(gtk.DrawingArea):
             """Enmascara la imagen de la torta y dibuja solo los trozos que no
             fueron seleccionados
             """
-            image_ctx = cairo.Context(image)
+            dummy_image = cairo.ImageSurface(cairo.FORMAT_ARGB32, WIDTH, HEIGHT)
+            image_ctx = cairo.Context(dummy_image)
+            image_ctx.set_source_surface(image)
+            image_ctx.paint()
             image_ctx.set_operator(cairo.OPERATOR_CLEAR)
             for index, selected in enumerate(self.selected_list):
                 if selected:
@@ -92,7 +95,7 @@ class Cake(gtk.DrawingArea):
                         angle_end)
                     image_ctx.close_path()
                     image_ctx.fill()
-            context.set_source_surface(image)
+            context.set_source_surface(dummy_image)
             context.paint()
 
 
