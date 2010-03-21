@@ -19,8 +19,8 @@ class FractionPresentation(gtk.VBox):
     def __init__(self):
         super(FractionPresentation, self).__init__()
         # Change font size
-        #settings = gtk.settings_get_default()
-        #settings.set_string_property("gtk-font-name", "Sans 40", "FractionPresentation")
+        settings = gtk.settings_get_default()
+        settings.set_string_property("gtk-font-name", "Sans 40", "FractionPresentation")
 
         # instantiate logic
         self.logic = FractionLogic()
@@ -37,7 +37,7 @@ class FractionPresentation(gtk.VBox):
         gamem.set_submenu(gamemenu)
 
         new = gtk.MenuItem("New")
-        new.connect("activate", self.menu_game_new)
+        new.connect("activate", self.new_game)
         gamemenu.append(new)
 
         exit = gtk.MenuItem("Exit")
@@ -56,7 +56,7 @@ class FractionPresentation(gtk.VBox):
 
         mb.append(helpm)
         # 2. label
-        label = gtk.Label("""Eat %i/%i"""%self.logic.get_current())
+        label = gtk.Label("""Select %i/%i"""%self.logic.get_current())
         self.pack_start(label, False, True)
         self.label = label
         # 3. cake
@@ -74,18 +74,19 @@ class FractionPresentation(gtk.VBox):
         self.show_all()
 
 
-    def menu_game_new(self, menuitem):
+    def new_game(self):
         log.debug("menu_game_new")
-        self.new_game()
+        self.logic.generate()
+        self.label.set_text("""Select %i/%i"""%self.logic.get_current())
+        self.cake.reset(self.logic.get_current()[1])
 
 
-    def menu_game_exit(self, menuitem):
+    def menu_game_exit(self):
         log.debug("menu_game_exit")
         gtk.main_quit()
 
     
-    def menu_help_about(self, menuitem):
-        print menuitem
+    def menu_help_about(self):
         log.debug("menu_help_about")
         about = gtk.AboutDialog()
         about.set_program_name("Fracciones")
@@ -96,7 +97,7 @@ class FractionPresentation(gtk.VBox):
     def check_cake(self, widget):
         """Clicked button check"""
         log.debug("on_clicked_check")
-        if self.logic.is_equal(self.cake.current_fraction):
+        if self.logic.is_equal(self.cake.get_current_fraction()):
             md = gtk.MessageDialog(None, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, "GOOD!")
             md.run()
             md.destroy()
@@ -105,12 +106,6 @@ class FractionPresentation(gtk.VBox):
             md = gtk.MessageDialog(None, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, "BAD!")
             md.run()
             md.destroy()
-
-
-    def new_game(self):
-        self.logic.generate()
-        self.label.set_text("""Eat %i/%i"""%self.logic.get_current())
-        self.cake.reset(self.logic.get_current()[1])
 
 
 if __name__ == "__main__":
