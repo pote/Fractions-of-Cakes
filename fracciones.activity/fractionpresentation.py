@@ -111,15 +111,3 @@ class FractionPresentation(gtk.VBox):
         self.logic.generate()
         self.label.set_text("""Eat %i/%i"""%self.logic.get_current())
         self.cake.reset(self.logic.get_current()[1])
-
-
-if __name__ == "__main__":
-    class Main(gtk.Window):
-        def __init__(self):
-            super(Main, self).__init__() 
-            self.add(FractionPresentation())
-            self.connect("destroy", gtk.main_quit)
-            self.show()
-    log.debug("Hola")
-    Main()
-    gtk.main()

@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-.
-
-import logging
 import gtk
-from fracciones_standalone import FraccionesStandalone
+from fractionpresentation import FractionPresentation
 
 
-logging.basicConfig(level=logging.DEBUG)
-
+class FraccionesStandalone(gtk.Window):
+    def __init__(self):
+        super(FraccionesStandalone, self).__init__() 
+        self.add(FractionPresentation())
+        self.connect("destroy", gtk.main_quit)
+        self.show()
+ 
 
 if __name__ == "__main__":
-    # crea ventana standalone
-    standalone = FraccionesStandalone()
-    # loop de eventos
+    FraccionesStandalone()
     gtk.main()
