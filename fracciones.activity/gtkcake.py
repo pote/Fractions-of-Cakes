@@ -58,13 +58,13 @@ class Cake(gtk.DrawingArea):
     def _draw(self, context):
         """Dibuja el contenido del widget"""
 
-        def draw_grid(context, subdivisions):
+        def draw_grid():
             """Dibuja la rejilla de la torta y sus subdivisiones"""
             context.set_source_rgb(0, 0, 0)
             context.arc(WIDTH/2, HEIGHT/2, RADIUS, 0, 2 * math.pi)
             context.stroke()
-            for i in xrange(subdivisions):
-                angle = 2 * math.pi * i / subdivisions
+            for i in range(self.subdivisions):
+                angle = 2 * math.pi * i / self.subdivisions
                 context.move_to(WIDTH/2, HEIGHT/2)
                 context.line_to(
                     WIDTH/2 + RADIUS*math.cos(angle),
@@ -73,7 +73,7 @@ class Cake(gtk.DrawingArea):
                 context.stroke()
 
 
-        def mask_image(context, image):
+        def mask_image(image):
             """Enmascara la imagen de la torta y dibuja solo los trozos que no
             fueron seleccionados
             """
@@ -109,10 +109,10 @@ class Cake(gtk.DrawingArea):
         context.paint()
 
         # Dibuja el frente 
-        mask_image(context, self.image_fg)
+        mask_image(self.image_fg)
 
         # Dibuja la rejilla
-        draw_grid(context, self.subdivisions)
+        draw_grid()
 
 
     def _select(self, ux, uy):
