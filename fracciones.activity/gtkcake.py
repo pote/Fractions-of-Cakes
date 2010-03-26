@@ -12,6 +12,7 @@ import math
 import gtk
 import cairo
 
+from fractionlogic import Fraction
 
 WIDTH = 500
 HEIGHT = 500
@@ -44,8 +45,8 @@ class Cake(gtk.DrawingArea):
 
     @property
     def current_fraction(self):
-        return (len([selected for selected in self.selected_list if selected]), self.subdivisions)
-
+        return Fraction(len([selected for selected in self.selected_list if selected]), self.subdivisions)
+        
 
     def reset(self, subdivisions, draw=True):
         # variables de estado de la torta
