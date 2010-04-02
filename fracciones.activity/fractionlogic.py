@@ -52,7 +52,7 @@ class FractionLogic(object):
 
 
     def is_equal(self, fraction):
-        """Check if fraction is equal that the internal"""
+        """DEPRECATED: Check if fraction is equal that the internal"""
         if not(type(fraction) is Fraction and self.fraction.denominator is not None):
             raise Exception("fraction must be a tuple of length 2")
         if self.fraction.denominator is None:
