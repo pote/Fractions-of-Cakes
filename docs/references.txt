@@ -35,6 +35,6 @@ Add custom widgets to Glade
 i18n
 ====
 * http://docs.python.org/library/gettext.html
-* http://pylonshq.com/docs/en/0.9.7/i18n/
 * http://babel.edgewall.org/wiki/Documentation/0.9/index.html
 * http://wiki.laptop.org/go/Python_i18n
+* http://pylonsbook.com/en/1.1/internationalization-and-localization.html
