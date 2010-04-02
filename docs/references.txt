@@ -1,0 +1,40 @@
+GTK+ and Glade3 GUI Programming
+===============================
+
+* http://www.micahcarrick.com/12-24-2007/gtk-glade-tutorial-part-1.html
+* http://www.micahcarrick.com/12-27-2007/gtk-glade-tutorial-part-2.html
+* http://www.micahcarrick.com/01-01-2008/gtk-glade-tutorial-part-3.html
+
+
+Create a GTK+ widget
+====================
+
+In C:
+* http://gnomejournal.org/article/34/writing-a-widget-using-cairo-and-gtk28
+* http://gnomejournal.org/article/36/writing-a-widget-using-cairo-and-gtk28-part-2
+In python:
+* http://www.pygtk.org/articles/cairo-pygtk-widgets/cairo-pygtk-widgets.htm
+* http://www.pygtk.org/articles/cairo-pygtk-widgets/cairo-pygtk-widgets2.htm
+
+
+Cairo
+=====
+* http://www.tortall.net/mu/wiki/CairoTutorial
+* http://www.tortall.net/mu/wiki/PyGTKCairoTutorial
+
+
+Add custom widgets to Glade
+===========================
+
+* http://library.gnome.org/devel/gladeui/3.6/catalog.html
+* http://www.pygtk.org/articles/custom-widgets-glade/Custom_PyGTK_Widgets_in_Glade3.html
+* http://www.pygtk.org/articles/custom-widgets-glade/Custom_PyGTK_Widgets_in_Glade3-part-2.html
+* http://lists.ximian.com/pipermail/glade-users/2009-July/004581.html
+
+
+i18n
+====
+* http://docs.python.org/library/gettext.html
+* http://pylonshq.com/docs/en/0.9.7/i18n/
+* http://babel.edgewall.org/wiki/Documentation/0.9/index.html
+* http://wiki.laptop.org/go/Python_i18n
