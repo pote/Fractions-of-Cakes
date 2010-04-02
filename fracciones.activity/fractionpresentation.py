@@ -9,7 +9,7 @@ import pango
 
 import gtkcake
 from fractionlogic import FractionLogic
-
+from fractionlogic import Fraction
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger()
