@@ -102,7 +102,8 @@ class FractionPresentation(gtk.VBox):
     def check_cake(self, widget):
         """Clicked button check"""
         log.debug("on_clicked_check")
-        if self.logic.is_equal(self.cake.current_fraction):
+        current_cake = self.logic.get_current_cake()
+        if current_cake == self.cake.current_fraction:
             md = gtk.MessageDialog(None, gtk.DIALOG_DESTROY_WITH_PARENT, gtk.MESSAGE_INFO, gtk.BUTTONS_CLOSE, _("GOOD!"))
             md.run()
             md.destroy()

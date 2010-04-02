@@ -13,7 +13,13 @@ class Fraction(object):
     def __init__(self):
         self.numerator = None
         self.denominator = None
-
+        
+    def __eq__(self,other_fraction):
+        if (self.numerator * other_fraction.denominator == self.denominator * other_fraction.numerator) and type(other_fraction) is Fraction:
+            return True 
+        else:
+            return False
+            
 
 class FractionLogic(object):
 
@@ -35,6 +41,14 @@ class FractionLogic(object):
         if self.fraction.denominator is None:
             raise Exception("generate_fraction must be called before get_current_fraction")
         return (self.fraction.numerator, self.fraction.denominator)
+        
+        
+    def get_current_cake(self):
+        """Return the current fraction, raise an exception if generate_fraction
+        hasn't called before"""
+        if self.fraction.denominator is None:
+            raise Exception("generate_fraction must be called before get_current_fraction")
+        return (self.fraction)
 
 
     def is_equal(self, fraction):
