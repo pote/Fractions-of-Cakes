@@ -1,0 +1,16 @@
+En este archivo describiremos los pasos para generar los archivos necesarios
+para la internacionalización de la aplicacion.
+
+* Creamos el directorio locale
+        mkdir locale
+* Extraemos los textos a traducir de los archivos
+        pybabel extract -o locale/fracciones.pot .
+* Creamos un catalogo para traducir
+        pybabel init -D fracciones -i locale/fracciones.pot -d locale -l es
+* Actualizamos un catalogo
+        volvemos a extraer los textos de los archivos
+        pybabel update -D fracciones -i locale/fracciones.pot -d locale
+* Compilar los catalogos
+        pybabel compile -D fracciones -d locale --statistics
+
+
