@@ -96,6 +96,7 @@ def calculate(fraction_1,fraction_2,operator):
         result = divide(fraction_1,fraction_2)
     return result
 
+
 def add(fraction_1,fraction_2):
     result = Fraction()
     if fraction_1.denominator == fraction_2.denominator : 
@@ -103,10 +104,10 @@ def add(fraction_1,fraction_2):
         result.denominator = fraction_1.denominator
         return result
     else:
-        lcm = lcm(fraction_1.denominator,fraction_2.numerator)
-        result.denominator = lcm
-        alt_fraction_1 = fraction_1.numerator * lcm
-        alt_fraction_2 = fraction_2.numerator * lcm 
+        mcm = lcm(fraction_1.denominator,fraction_2.numerator)
+        result.denominator = mcm
+        alt_fraction_1 = fraction_1.numerator * (fraction_1.denominator / mcm)
+        alt_fraction_2 = fraction_2.numerator * (fraction_2.denominator / mcm)
         result.numerator = alt_fraction_1 + alt_fraction_2                 
         return result
                
@@ -119,10 +120,10 @@ def substract(fraction_1,fraction_2):
         return result
     else:
         lcm = lcm(fraction_1.denominator,fraction_2.numerator)
-        result.denominator = lcm
-        alt_fraction_1 = fraction_1.numerator * lcm
-        alt_fraction_2 = fraction_2.numerator * lcm 
-        result.numerator = alt_fraction_1 + alt_fraction_2                 
+        result.denominator = mcm
+        alt_fraction_1 = fraction_1.numerator * (fraction_1.denominator / mcm)
+        alt_fraction_2 = fraction_2.numerator * (fraction_2.denominator / mcm)
+        result.numerator = alt_fraction_1 - alt_fraction_2                 
         return result
 
 def multiply(fraction_1,fraction_2):
