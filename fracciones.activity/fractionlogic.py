@@ -82,7 +82,7 @@ class FractionLogic(object):
 
 #<--Math methods for the Fraction object begin here-->
 
-def calculate(fraction_1,fraction_2,operator,reduce=False):
+def calculate(fraction_1,fraction_2,operator,reduced_output=False):
     """Calls appropiate method depending on the operator received as an argument""" 
     """Requires 2 fraction objects and a one character string with the operator (+,-,*,/)"""
     result = ( )
@@ -94,7 +94,7 @@ def calculate(fraction_1,fraction_2,operator,reduce=False):
         result = multiply(fraction_1,fraction_2)
     elif operator == "/" :
         result = divide(fraction_1,fraction_2)
-    if reduce = False:
+    if reduced_output = False:
         return result
     else:
         return reduce(result)
