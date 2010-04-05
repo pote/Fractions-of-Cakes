@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Contain the logic of fractions and comparations of fractions.
+Contains the logic of fractions and comparations of fractions.
 
 """
 import random
@@ -82,7 +82,7 @@ class FractionLogic(object):
 
 #<--Math methods for the Fraction object begin here-->
 
-def calculate(fraction_1,fraction_2,operator):
+def calculate(fraction_1,fraction_2,operator,reduce=False):
     """Calls appropiate method depending on the operator received as an argument""" 
     """Requires 2 fraction objects and a one character string with the operator (+,-,*,/)"""
     result = ( )
@@ -94,8 +94,10 @@ def calculate(fraction_1,fraction_2,operator):
         result = multiply(fraction_1,fraction_2)
     elif operator == "/" :
         result = divide(fraction_1,fraction_2)
-    return result
-
+    if reduce = False:
+        return result
+    else:
+        return reduce(result)
 
 def add(fraction_1,fraction_2):
     result = Fraction()
@@ -119,7 +121,7 @@ def substract(fraction_1,fraction_2):
         result.denominator = fraction_1.denominator
         return result
     else:
-        lcm = lcm(fraction_1.denominator,fraction_2.numerator)
+        mcm = lcm(fraction_1.denominator,fraction_2.numerator)
         result.denominator = mcm
         alt_fraction_1 = fraction_1.numerator * (fraction_1.denominator / mcm)
         alt_fraction_2 = fraction_2.numerator * (fraction_2.denominator / mcm)
@@ -142,11 +144,14 @@ def reduce(fraction):
     same_fraction = False
     while not same_fraction:
         same_fraction = True
-        for i in range(1,10):
-            if (fraction % i == 0):
-                fraction = fraction / i
+        for i in range(2,10):
+            if (fraction.numerator % i == 0 and fraction.denominator % i == 0):
+                fraction.numerator = fraction.numerator / i
+                fraction.denominator = fraction.denominator / i
                 same_fraction = False 
-             
+                i = 2
+    return fraction
+    
 # the function to calculate the GCD
 def gcd(num1, num2):
     if num1 > num2:
