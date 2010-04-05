@@ -10,9 +10,9 @@ DENOMINATOR_MAX = 10
 
 class Fraction(object):
 
-    def __init__(self):
-        self.numerator = None
-        self.denominator = None
+    def __init__(self,numerator=None,denominator=None):
+        self.numerator = numerator
+        self.denominator = denominator
             
     def __eq__(self,other_fraction):
         if (self.numerator * other_fraction.denominator == self.denominator * other_fraction.numerator) and type(other_fraction) is Fraction:
@@ -85,7 +85,7 @@ class FractionLogic(object):
 def calculate(fraction_1,fraction_2,operator,reduced_output=False):
     """Calls appropiate method depending on the operator received as an argument""" 
     """Requires 2 fraction objects and a one character string with the operator (+,-,*,/)"""
-    result = ( )
+    result = Fraction()
     if operator == "+" : 
         result = add(fraction_1,fraction_2)
     elif operator == "-" : 
@@ -94,7 +94,7 @@ def calculate(fraction_1,fraction_2,operator,reduced_output=False):
         result = multiply(fraction_1,fraction_2)
     elif operator == "/" :
         result = divide(fraction_1,fraction_2)
-    if reduced_output = False:
+    if reduced_output == False:
         return result
     else:
         return reduce(result)
@@ -152,7 +152,7 @@ def reduce(fraction):
                 i = 2
     return fraction
     
-# the function to calculate the GCD
+# Function to calculate the GCD
 def gcd(num1, num2):
     if num1 > num2:
         for i in range(1,num2+1):
@@ -172,7 +172,7 @@ def gcd(num1, num2):
         result = num1*num2/num1
         return result
 
-# the function to calculate the LCM
+# Function to calculate the LCM
 def lcm(num1, num2):
     result = num1*num2/gcd(num1,num2)
     return result                                  
