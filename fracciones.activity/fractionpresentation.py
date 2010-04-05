@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-Contain the presentation of the game, a widget descendant from container.
+Contains the presentation of the game, a widget descendant from container.
 
 """
 import logging

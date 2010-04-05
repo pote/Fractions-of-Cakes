@@ -13,14 +13,27 @@ class Fraction(object):
     def __init__(self):
         self.numerator = None
         self.denominator = None
-        
+            
     def __eq__(self,other_fraction):
         if (self.numerator * other_fraction.denominator == self.denominator * other_fraction.numerator) and type(other_fraction) is Fraction:
             return True 
         else:
             return False
             
+    def __ne__(self,other_fraction):
+        if (self.numerator * other_fraction.denominator != self.denominator * other_fraction.numerator):
+            return True 
+        else:
+            return False        
 
+    def __add__(self,other_fraction):
+        if not (type(other_fraction) is Fraction):
+            raise Exception("Fraction Objects only allow addition with other Fraction objects")
+        else:
+            return calculate(self,other_fraction,"+")
+                   
+                     
+                
 class FractionLogic(object):
 
     def __init__(self):
@@ -64,3 +77,60 @@ class FractionLogic(object):
         if self.fraction.denominator is None:
             return "<FractionLogic(Undefined)>"
         return "<FractionLogic(%i,%i)>"%(self.fraction.numerator,self.fraction.denominator)
+
+
+
+
+def calculate(fraction_1,fraction_2,operator):
+        """Calls appropiate method depending on the operator received as an argument""" 
+        """Requires 2 fraction objects and a one character string with the operator (+,-,*,/)"""
+        result = ( )
+        if operator == "+" : 
+                result = add(fraction_1,fraction_2)
+        elif operator == "-" : 
+                result = substract(fraction_1,fraction_2) 
+        elif operator == "*" : 
+                result = multiply(fraction_1,fraction_2)
+        elif operator == "/" :
+                result = divide(fraction_1,fraction_2)
+        return result
+
+def add(fraction_1,fraction_2):
+        result = Fraction()
+        if fraction_1.denominator == fraction_2.denominator : 
+                result.numerator = fraction_1.numerator + fraction_2.numerator
+                result.denominator = fraction_1.denominator
+                return result
+        else:
+                mcm = fraction_1.denominator * fraction_2.denominator
+                result.denominator = mcm
+                alt_fraction_1 = fraction_1.numerator * fraction_2.denominator
+                alt_fraction_2 = fraction_2.numerator * fraction_1.denominator 
+                result.numerator = alt_fraction_1 + alt_fraction_2
+                return result
+
+def substract(fraction_1,fraction_2):
+        result_fraction = Fraction()
+        if fraction_1.denominator == fraction_2.denominator : 
+                result.numerator = fraction_1.numerator - fraction_2.numerator
+                result.denominator = fraction_1.denominator
+                return result
+        else:
+                mcm = fraction_1.denominator * fraction_2.denominator
+                result.denominator = mcm
+                alt_fraction_1 = fraction_1.numerator * fraction_2.denominator
+                alt_fraction_2 = fraction_2.numerator * fraction_1.denominator 
+                result.numerator = alt_fraction_1 - alt_fraction_2
+                return result
+
+def multiply(fraction_1,fraction_2):
+        result = Fraction()
+        result.numerator = fraction_1.numerator * fraction_2.numerator
+        result.denominator = fraction_1.denominator * fraction_2.denominator
+        return result
+
+def divide(fraction_1,fraction_2):
+        inverse_fraction = Fraction()
+        inverse_fraction.numerator = fraction_2.denominator
+        inverse_fraction.denominator = fraction_2.numerator
+        return multiply(fraction_1,fraction_2) 
