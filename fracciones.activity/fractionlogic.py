@@ -106,13 +106,13 @@ def add(fraction_1,fraction_2):
         result.denominator = fraction_1.denominator
         return result
     else:
-        mcm = lcm(fraction_1.denominator,fraction_2.numerator)
+        mcm = lcm(fraction_1.denominator,fraction_2.denominator)
         result.denominator = mcm
-        alt_fraction_1 = fraction_1.numerator * (fraction_1.denominator / mcm)
-        alt_fraction_2 = fraction_2.numerator * (fraction_2.denominator / mcm)
-        result.numerator = alt_fraction_1 + alt_fraction_2                 
+        alt_1 = fraction_1.numerator * (result.denominator / fraction_1.denominator)
+        alt_2 = fraction_2.numerator * (result.denominator / fraction_2.denominator)
+        result.numerator = alt_1 + alt_2            
         return result
-               
+
 
 def substract(fraction_1,fraction_2):
     result_fraction = Fraction()
@@ -121,11 +121,11 @@ def substract(fraction_1,fraction_2):
         result.denominator = fraction_1.denominator
         return result
     else:
-        mcm = lcm(fraction_1.denominator,fraction_2.numerator)
+        mcm = lcm(fraction_1.denominator,fraction_2.denominator)
         result.denominator = mcm
-        alt_fraction_1 = fraction_1.numerator * (fraction_1.denominator / mcm)
-        alt_fraction_2 = fraction_2.numerator * (fraction_2.denominator / mcm)
-        result.numerator = alt_fraction_1 - alt_fraction_2                 
+        alt_1 = fraction_1.numerator * (result.denominator / fraction_1.denominator)
+        alt_2 = fraction_2.numerator * (result.denominator / fraction_2.denominator)
+        result.numerator = alt_1 - alt_2            
         return result
 
 def multiply(fraction_1,fraction_2):
